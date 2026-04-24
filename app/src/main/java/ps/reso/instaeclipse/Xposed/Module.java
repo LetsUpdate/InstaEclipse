@@ -23,6 +23,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import ps.reso.instaeclipse.mods.ads.AdBlocker;
+import ps.reso.instaeclipse.mods.feed.ActivityReelsFilterHook;
 import ps.reso.instaeclipse.mods.feed.HideSuggestedFeedItemsHook;
 import ps.reso.instaeclipse.mods.feed.ReelsClientHook;
 import ps.reso.instaeclipse.mods.ads.TrackingLinkDisable;
@@ -252,6 +253,13 @@ public class Module implements IXposedHookLoadPackage, IXposedHookZygoteInit {
                         new ReelsClientHook().install(hostClassLoader);
                     } catch (Throwable ignored) {
                         XposedBridge.log("(InstaEclipse | ReelsClient): ❌ Failed to hook");
+                    }
+
+                    // Activity/Notifications feed Reels filter (removes Clips items before binding)
+                    try {
+                        new ActivityReelsFilterHook().install(dexKitBridge, hostClassLoader);
+                    } catch (Throwable ignored) {
+                        XposedBridge.log("(InstaEclipse | ActivityReelsFilter): ❌ Failed to hook");
                     }
 
                     // Ads Blocker

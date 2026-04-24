@@ -80,6 +80,13 @@ public class FeatureManager {
             FeatureStatusTracker.setDisabled("HideSuggestionsInFeed");
         }
 
+        // Activity feed Reels filter (active when either Reels disable flag is set)
+        if (FeatureFlags.disableReels || FeatureFlags.disableReelsExceptDM) {
+            FeatureStatusTracker.setEnabled("ActivityReelsFilter", R.string.ig_dialog_clean_feed_hide_suggested);
+        } else {
+            FeatureStatusTracker.setDisabled("ActivityReelsFilter");
+        }
+
         // Miscellaneous
         if (FeatureFlags.disableTrackingLinks) {
             FeatureStatusTracker.setEnabled("DisableTrackingLinks", R.string.ig_dialog_ad_disable_tracking);
